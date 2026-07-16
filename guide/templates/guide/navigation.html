@@ -67,9 +67,30 @@ const nodeColors = {
     path: { background: "#b9862f", border: "#241f1a", font: { color: "#241f1a" } }
 };
 
+// Fixed positions matching the reference diagram layout.
+// Nodes not listed here (if any) fall back to an automatic spot.
+const NODE_POSITIONS = {
+    "Preah Khan": { x: 580, y: 60 },
+    "Neak Poan": { x: 980, y: 60 },
+    "Neak Pean": { x: 1120, y: 150 },
+    "Baphuon": { x: 172, y: 235 },
+    "Terrace of the Elephants": { x: 396, y: 385 },
+    "Thommanon": { x: 683, y: 291 },
+    "Chau Say Tevoda": { x: 683, y: 515 },
+    "Ta Prohm": { x: 960, y: 395 },
+    "Bayon": { x: 225, y: 545 },
+    "Sras Srang": { x: 1075, y: 578 },
+    "South Gate": { x: 242, y: 723 },
+    "Pre Rup": { x: 1075, y: 778 },
+    "Phnom Bakheng": { x: 248, y: 878 },
+    "Kravan": { x: 820, y: 980 },
+    "Angkor Wat": { x: 449, y: 1057 }
+};
+
 const nodesDataSet = new vis.DataSet(GRAPH_DATA.nodes.map(n => ({
     id: n.id, label: n.label, shape: "box", margin: 8,
-    color: nodeColors.default
+    color: nodeColors.default,
+    ...(NODE_POSITIONS[n.id] ? { x: NODE_POSITIONS[n.id].x, y: NODE_POSITIONS[n.id].y, fixed: true } : {})
 })));
 
 const edgesDataSet = new vis.DataSet(GRAPH_DATA.edges.map((e, i) => ({
@@ -79,16 +100,9 @@ const edgesDataSet = new vis.DataSet(GRAPH_DATA.edges.map((e, i) => ({
 
 const container = document.getElementById("network-map");
 const network = new vis.Network(container, { nodes: nodesDataSet, edges: edgesDataSet }, {
-    physics: { stabilization: true, barnesHut: { springLength: 140 } },
-    interaction: { hover: true },
+    physics: false,
+    interaction: { hover: true, dragNodes: false },
     edges: { smooth: { type: "continuous" } }
-});
-
-// Once the initial layout settles, turn physics off so nodes stop
-// drifting/rotating. Dragging a node still works; it just won't
-// trigger the whole graph to keep re-adjusting.
-network.once("stabilizationIterationsDone", () => {
-    network.setOptions({ physics: false });
 });
 
 function resetHighlight() {
