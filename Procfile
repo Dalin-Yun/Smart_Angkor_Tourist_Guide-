@@ -1,0 +1,1 @@
+web: python manage.py migrate && python manage.py load_data && python manage.py collectstatic --noinput && gunicorn config.wsgi

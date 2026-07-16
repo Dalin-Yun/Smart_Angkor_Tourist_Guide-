@@ -1,0 +1,49 @@
+{% extends "guide/base.html" %}
+{% block title %}Smart Angkor Tourist Guide{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <svg class="temple-silhouette" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#d4a34e" d="M100 5 L110 25 L90 25 Z M70 20 L80 40 L60 40 Z M130 20 L140 40 L120 40 Z
+        M20 60 L180 60 L180 70 L20 70 Z M10 75 L190 75 L190 115 L10 115 Z
+        M85 30 L95 30 L95 60 L85 60 Z M65 45 L75 45 L75 60 L65 60 Z M125 45 L135 45 L135 60 L125 60 Z"/>
+    </svg>
+    <div class="eyebrow">Angkor Archaeological Park</div>
+    <h1>Smart Angkor Tourist Guide</h1>
+    <p class="lede">Plan your visit across {{ temple_count }} temples connected by {{ road_count }} roads &mdash;
+        search temple information, trace the shortest route between ruins, and get a tour recommendation
+        built for your time and interests.</p>
+    <a href="{% url 'guide:navigation' %}" class="btn btn-gold btn-lg mt-2">Open the Navigation Map</a>
+    <a href="{% url 'guide:recommend' %}" class="btn btn-outline-light btn-lg mt-2 ms-2">Get a Recommendation</a>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100 p-4">
+            <div class="section-label">Temples</div>
+            <h3 class="card-title">Browse &amp; Search</h3>
+            <p>Look up any of the {{ temple_count }} temples by name, filter by category, and read
+                opening hours, ratings and history.</p>
+            <a href="{% url 'guide:temple_list' %}" class="btn btn-outline-jungle mt-auto">View Temples</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 p-4">
+            <div class="section-label">Navigation</div>
+            <h3 class="card-title">Interactive Map</h3>
+            <p>Run Breadth-First Search, Depth-First Search, or Dijkstra's shortest route across the
+                temple road network, visualised live.</p>
+            <a href="{% url 'guide:navigation' %}" class="btn btn-outline-jungle mt-auto">Explore Routes</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 p-4">
+            <div class="section-label">Recommendation</div>
+            <h3 class="card-title">Recommend Tour</h3>
+            <p>Tell us how much time you have and what you're interested in &mdash; history, nature,
+                sunrise, sunset &mdash; and get a tailored temple list.</p>
+            <a href="{% url 'guide:recommend' %}" class="btn btn-outline-jungle mt-auto">Get Recommendation</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

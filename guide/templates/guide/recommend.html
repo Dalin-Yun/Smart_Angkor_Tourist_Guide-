@@ -1,0 +1,58 @@
+{% extends "guide/base.html" %}
+{% block title %}Recommend Tour &middot; Smart Angkor Guide{% endblock %}
+
+{% block content %}
+<div class="section-label">Decision Tree</div>
+<h1>Recommend a Tour</h1>
+<p class="text-muted">Tell us how much time you have and what interests you most.</p>
+<hr class="divider-gold">
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-sm-6 col-md-4">
+        <label class="form-label">Available Time</label>
+        <select name="time" class="form-select" required>
+            <option value="">Choose...</option>
+            <option value="Short time" {% if time == "Short time" %}selected{% endif %}>Short time</option>
+            <option value="Half day" {% if time == "Half day" %}selected{% endif %}>Half day</option>
+            <option value="Full day" {% if time == "Full day" %}selected{% endif %}>Full day</option>
+        </select>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <label class="form-label">Interest</label>
+        <select name="interest" class="form-select" required>
+            <option value="">Choose...</option>
+            <option value="History" {% if interest == "History" %}selected{% endif %}>History</option>
+            <option value="Nature" {% if interest == "Nature" %}selected{% endif %}>Nature</option>
+            <option value="Architecture" {% if interest == "Architecture" %}selected{% endif %}>Architecture</option>
+            <option value="Photography" {% if interest == "Photography" %}selected{% endif %}>Photography</option>
+            <option value="Sunrise" {% if interest == "Sunrise" %}selected{% endif %}>Sunrise</option>
+            <option value="Sunset" {% if interest == "Sunset" %}selected{% endif %}>Sunset</option>
+        </select>
+    </div>
+    <div class="col-md-4 d-flex align-items-end">
+        <button type="submit" class="btn btn-gold w-100">Recommend Tour</button>
+    </div>
+</form>
+
+{% if submitted %}
+    {% if temples_info %}
+        <h4 class="mb-3">Recommended for a <strong>{{ time }}</strong> visit, focused on <strong>{{ interest }}</strong>:</h4>
+        <div class="row g-4">
+            {% for temple in temples_info %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 p-3">
+                    <span class="badge badge-category align-self-start mb-2">{{ forloop.counter }}. Stop</span>
+                    <h3 class="card-title">{{ temple.name }}</h3>
+                    <p class="small text-muted mb-2">{{ temple.category }} &middot; &#9733; {{ temple.rating }}</p>
+                    <p class="small">{{ temple.description|truncatewords:20 }}</p>
+                    <a href="{% url 'guide:temple_detail' temple.temple_id %}"
+                       class="btn btn-sm btn-outline-jungle mt-auto align-self-start">Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">No recommendation available for that combination yet.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}

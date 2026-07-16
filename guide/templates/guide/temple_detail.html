@@ -1,0 +1,35 @@
+{% extends "guide/base.html" %}
+{% block title %}{% if found %}{{ temple.Name }}{% else %}Not Found{% endif %} &middot; Smart Angkor Guide{% endblock %}
+
+{% block content %}
+<a href="{% url 'guide:temple_list' %}" class="btn btn-sm btn-outline-jungle mb-3">&larr; Back to Temples</a>
+
+{% if found %}
+    <div class="section-label">Temple Information &middot; {{ temple.ID }}</div>
+    <div class="d-flex justify-content-between align-items-start flex-wrap">
+        <h1>{{ temple.Name }}</h1>
+        <span class="rating-gold fs-4">&#9733; {{ temple.Rating }}</span>
+    </div>
+    <span class="badge badge-category mb-3">{{ temple.Category }}</span>
+    <hr class="divider-gold">
+
+    <div class="row g-4">
+        <div class="col-md-8">
+            <h3>About</h3>
+            <p>{{ temple.Description }}</p>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h4 class="mb-3">Visit Details</h4>
+                <p class="mb-1"><strong>Open:</strong> {{ temple.Open }}</p>
+                <p class="mb-1"><strong>Close:</strong> {{ temple.Close }}</p>
+                <p class="mb-3"><strong>Suggested visit time:</strong> {{ temple.VisitTime }} hour(s)</p>
+                <a href="{% url 'guide:navigation' %}" class="btn btn-gold w-100">Find a Route Here</a>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <h1>Temple Not Found</h1>
+    <p class="text-muted">No temple with ID "{{ temple_id }}" was found.</p>
+{% endif %}
+{% endblock %}

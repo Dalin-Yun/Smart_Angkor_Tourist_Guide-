@@ -1,0 +1,21 @@
+Source,Destination,Distance
+Angkor Wat,Phnom Bakheng,1.3
+Phnom Bakheng,South Gate,0.4
+South Gate,Bayon,1.6
+Bayon,Baphuon,0.55
+Bayon,Terrace of the Elephants,0.5
+Baphuon,Terrace of the Elephants,0.3
+Terrace of the Elephants,Preah Khan,2.5
+Preah Khan,Neak Pean,3.5
+Neak Pean,Pre Rup,6
+Terrace of the Elephants,Thommanon,2
+Terrace of the Elephants,Chau Say Tevoda,2
+Thommanon,Chau Say Tevoda,0.09
+Thommanon,Ta Prohm,2.2
+Chau Say Tevoda,Ta Prohm,2.2
+Ta Prohm,Sras Srang,1.1
+Sras Srang,Pre Rup,2.2
+Pre Rup,Kravan,3.7
+Kravan,Angkor Wat,5.6
+Kravan,Ta Prohm,2.7
+Kravan,Sras Srang,1.5

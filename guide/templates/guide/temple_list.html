@@ -1,0 +1,54 @@
+{% extends "guide/base.html" %}
+{% block title %}Temples &middot; Smart Angkor Guide{% endblock %}
+
+{% block content %}
+<div class="section-label">List of Temples</div>
+<h1>Browse Temples</h1>
+<hr class="divider-gold">
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-sm-6 col-md-5">
+        <input type="text" name="q" value="{{ query }}" class="form-control"
+               placeholder="Search by name (e.g. Bayon)">
+    </div>
+    <div class="col-sm-4 col-md-3">
+        <select name="category" class="form-select">
+            <option value="">All categories</option>
+            {% for c in categories %}
+                <option value="{{ c }}" {% if c == category %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-sm-2 col-md-2">
+        <button type="submit" class="btn btn-gold w-100">Search</button>
+    </div>
+    {% if query or category %}
+    <div class="col-sm-2 col-md-2">
+        <a href="{% url 'guide:temple_list' %}" class="btn btn-outline-jungle w-100">Reset</a>
+    </div>
+    {% endif %}
+</form>
+
+{% if temples %}
+<div class="row g-4">
+    {% for temple in temples %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 p-3">
+            <div class="d-flex justify-content-between align-items-start">
+                <h3 class="card-title mb-1">{{ temple.name }}</h3>
+                <span class="rating-gold">&#9733; {{ temple.rating }}</span>
+            </div>
+            <span class="badge badge-category align-self-start mb-2">{{ temple.category }}</span>
+            <p class="text-muted small mb-2">Open {{ temple.open_time }} &ndash; {{ temple.close_time }}
+                &middot; ~{{ temple.visit_time }}h visit</p>
+            <p class="small">{{ temple.description|truncatewords:22 }}</p>
+            <a href="{% url 'guide:temple_detail' temple.temple_id %}"
+               class="btn btn-sm btn-outline-jungle mt-auto align-self-start">View Details</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">No temples matched your search.</p>
+{% endif %}
+{% endblock %}
