@@ -84,6 +84,13 @@ const network = new vis.Network(container, { nodes: nodesDataSet, edges: edgesDa
     edges: { smooth: { type: "continuous" } }
 });
 
+// Once the initial layout settles, turn physics off so nodes stop
+// drifting/rotating. Dragging a node still works; it just won't
+// trigger the whole graph to keep re-adjusting.
+network.once("stabilizationIterationsDone", () => {
+    network.setOptions({ physics: false });
+});
+
 function resetHighlight() {
     nodesDataSet.forEach(n => nodesDataSet.update({ id: n.id, color: nodeColors.default }));
     edgesDataSet.forEach(e => edgesDataSet.update({ id: e.id, color: { color: "#c9bfa4" }, width: 1 }));
